@@ -14,5 +14,5 @@ bash exe.sh
 ## startup
         pip install -r requirements.txt
         echo "api_key='_YOUR_API_KEY_'" > conf.py
-        bash exe.sh
+        python test.py
         
