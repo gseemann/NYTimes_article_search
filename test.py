@@ -86,7 +86,7 @@ if __name__ == "__main__":
     # a simple way to create an object holding attributes.
     source.args = argparse.Namespace(**config)
 
-    for idx, batch in enumerate(source.getDataBatch(2)):
+    for idx, batch in enumerate(source.getDataBatch(10)):
         print(f"{idx} Batch of {len(batch)} items")
         for item in batch:
             print(f"  - {item['_id']} - {item['headline.main']}")
