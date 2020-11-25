@@ -1,4 +1,5 @@
 **/config.py
 **/conf.py
 **/article_info_flattening_playground.ipynb
-
+.ipynb_checkpoints
+**/__pycache__
