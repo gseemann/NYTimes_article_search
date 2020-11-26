@@ -16,6 +16,6 @@
 - Now you are ready to run the script
 
         python test.py
-- While running, current batch and length will be displayed along with the `_id` and `headline.main` for each article 
+- While running, the current batch will be printed to the terminal along with the `_id` and `headline.main` for each article 
 - The output will be stored in `output/output_df.csv` 
 - Note: Each time you run this, the output will be overwritten. To save multiple runs, go to params.py between runs and change the `file_out` variable to a new name
