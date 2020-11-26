@@ -1,7 +1,11 @@
 import argparse
 import logging
 import requests
+import pandas as pd 
+
+#my python files
 import functions
+import params
 import conf
 
 """
@@ -37,24 +41,30 @@ class NYTimesSource(object):
         :returns One list for each batch. Each of those is a list of
                  dictionaries with the defined rows.
         """
+#         print(params.flag)
+#         params.flag+=1
         for i in range(batch_size):
             q = 'Silicon Valley'
-            offset =i  #increment by 1 for the next set of batch
+            params.offset = params.offset+i  #increment by 1 for the next set of batch
             url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json'
-            url_params = {'q': self.args.query.replace(' ', '+'),'api-key': self.args.api_key,'page': offset}
-            r = requests.get(url,  params=url_params).json()
+            url_params = {'q': self.args.query.replace(' ', '+'),'api-key': self.args.api_key,'page': params.offset}
+            response = requests.get(url,  params=url_params)
+            r = response.json()
 
             #start by checking call was successful
-            if r['status'] != 'OK':
-                log.error("Error during API call")
-                return None
+            if response.ok:
+                if r['status'] != 'OK':
+                    log.error("Error with API call, NYT status not ok")
+                    return None
 
-            # TODO: implement - this dummy implementation returns one batch of data
-            list_of_art = []
-            for art in r['response']['docs']:
-                list_of_art.append(functions.flatten_json(art))
-            yield list_of_art
-
+                # TODO: implement - this dummy implementation returns one batch of data
+                list_of_art = []
+                for art in r['response']['docs']:
+                    list_of_art.append(functions.flatten_json(art))   #attach to list returned in call
+                yield list_of_art
+            else:
+                log.error("Error during API call on request side")
+                
     def getSchema(self):
         """
         Return the schema of the dataset
@@ -78,15 +88,25 @@ class NYTimesSource(object):
 if __name__ == "__main__":
     config = {
         "api_key": conf.api_key,
-        "query": "Silicon Valley",
+        "query": params.search
     }
     source = NYTimesSource()
+    #create headers in csv file to store data (*note this overwrites previous results)
+    pd.DataFrame(columns = params.col_names).to_csv(params.file_out)
 
     # This looks like an argparse dependency - but the Namespace class is just
     # a simple way to create an object holding attributes.
     source.args = argparse.Namespace(**config)
 
-    for idx, batch in enumerate(source.getDataBatch(10)):
+    for idx, batch in enumerate(source.getDataBatch(params.batch)):
+        df = pd.DataFrame(columns = params.col_names)
         print(f"{idx} Batch of {len(batch)} items")
         for item in batch:
-            print(f"  - {item['_id']} - {item['headline.main']}")
+            df = df.append(item, ignore_index=True)
+            print(f"- {item['_id']} - {item['headline.main']}")
+        #save current call values into df
+        with open(params.file_out, 'a') as f:
+            df.to_csv(params.file_out, mode='a', header=False, index=True)
+            
+
+    

@@ -14,13 +14,13 @@ def flatten_json(nested_json):
         if type(x) is dict:
             for a in x:
                 flatten(x[a], name + a + '.')
-        #takes into account lists and unravels them using current_key.i where i=item_#_in_the_list
-        elif type(x) is list:
-            i = 0
-            for a in x:
-                flatten(a, name + str(i) + '.')
-                i += 1
-        else:
+#         #Uncomment to flatten lists as well -> current_key.i where i=item_#_in_the_list
+#         elif type(x) is list:
+#             i = 0
+#             for a in x:
+#                 flatten(a, name + str(i) + '.')
+#                 i += 1
+        else: #add item to flattened dict
             out[name[:-1]] = x    # -1 excludes hanging . from name string
 
     flatten(nested_json)
