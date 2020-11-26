@@ -1,7 +1,8 @@
 # Overview
 - This project sets up a pipeline that utilizes the NYTimes Article Search API
 - The results are flattened in preperation for insertion into a hypothetical database
-- In this example, we print each batch call and the `_id` and `headline.main` for each article. We then store the full results into a csv file in the `output` folder
+- In this example, we print each batch call and the `_id` and `headline.main` for each article
+- We then store the full results into a csv file in the `output` folder
 
 ## Setup
 - First you will need to register for an [NY Times API key](https://developer.nytimes.com/get-started)
