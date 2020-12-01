@@ -2,6 +2,7 @@ import argparse
 import logging
 import requests
 import pandas as pd 
+import numpy as np
 
 #my python files
 import functions
@@ -41,10 +42,7 @@ class NYTimesSource(object):
         :returns One list for each batch. Each of those is a list of
                  dictionaries with the defined rows.
         """
-#         print(params.flag)
-#         params.flag+=1
         for i in range(batch_size):
-            q = 'Silicon Valley'
             params.offset = params.offset+i  #increment by 1 for the next set of batch
             url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json'
             url_params = {'q': self.args.query.replace(' ', '+'),'api-key': self.args.api_key,'page': params.offset}
@@ -88,7 +86,7 @@ class NYTimesSource(object):
 if __name__ == "__main__":
     config = {
         "api_key": conf.api_key,
-        "query": params.search
+        "query": params.search,
     }
     source = NYTimesSource()
     #create headers in csv file to store data (*note this overwrites previous results)
@@ -102,11 +100,17 @@ if __name__ == "__main__":
         df = pd.DataFrame(columns = params.col_names)
         print(f"{idx} Batch of {len(batch)} items")
         for item in batch:
-            df = df.append(item, ignore_index=True)
+            db_insert ={}    #will hold sample results for insert into db/df
+            for key in params.col_names: #only load in values in our db/df
+                try:
+                    db_insert[key]=item[key]
+                except:
+                    db_insert[key] = np.nan
+            df = df.append(db_insert, ignore_index=True) #possible to insert into db/df 1 row at a time here if prefered
             print(f"- {item['_id']} - {item['headline.main']}")
         #save current call values into df
         with open(params.file_out, 'a') as f:
-            df.to_csv(params.file_out, mode='a', header=False, index=True)
+            df.to_csv(params.file_out, mode='a', header=False, index=True)  #inserts 10 rows(1 batch) at a time into df
             
 
     

@@ -1,7 +1,7 @@
 ######### UPDATE file with variables to use while running test.py script (defaults provided) ##############
 
 ## COLUMN NAMES for df that stores all the info
-##NOTE: Program will throw error if unexpected column names are returned
+##NOTE: Program will ignore unexpected column names. Be sure this list is inclusive of all the info you care to store
 col_names = ['_id',
              'abstract',
              'byline.organization',
@@ -39,7 +39,7 @@ search = 'Silicon Valley'
 batch = 10
 offset = 0
 
-##Output df file
+##Output df file location
 file_out = 'output/output_df.csv'
 
 
