@@ -1,6 +1,6 @@
 # Overview
 - This project sets up a pipeline that utilizes the NYTimes Article Search API
-- The results are flattened in preperation for insertion into a hypothetical database
+- The results are flattened in preparation for insertion into a hypothetical database
 - In this example, we print each batch call and the `_id` and `headline.main` for each article
 - We then store the full results into a csv file in the `output` folder
 
