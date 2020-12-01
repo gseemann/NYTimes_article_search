@@ -20,6 +20,6 @@
 - While running, the current batch will be printed to the terminal along with the `_id` and `headline.main` for each article 
 - The full output will be stored in `output/output_df.csv` 
 ### Note:
-- Each time you run this, the output will be overwritten. To save multiple runs, go to 'params.py' between runs and change the `file_out` variable to a new name
+- Each time you run this, the output will be overwritten. To save multiple runs, go to `params.py` between runs and change the `file_out` variable to a new name
 - Flattened results(keys) returned that are not listed in the `params.col_names` will be ignored. The default list is fairly comprehensive, but make sure to update if needed
 
