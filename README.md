@@ -12,11 +12,14 @@
 
         pip install -r requirements.txt
         echo "api_key='_YOUR_API_KEY_'" > conf.py
-- Though not necessary, if you want to change the search parameters this can be done in the params.py file
+- Though not necessary, if you want to change the search parameters this can be done in the `params.py` file
 ## Run
 - Now you are ready to run the script
 
         python test.py
 - While running, the current batch will be printed to the terminal along with the `_id` and `headline.main` for each article 
 - The full output will be stored in `output/output_df.csv` 
-- Note: Each time you run this, the output will be overwritten. To save multiple runs, go to params.py between runs and change the `file_out` variable to a new name
+### Note:
+- Each time you run this, the output will be overwritten. To save multiple runs, go to 'params.py' between runs and change the `file_out` variable to a new name
+- Flattened results(keys) returned that are not listed in the `params.col_names` will be ignored. The default list is fairly comprehensive, but make sure to update if needed
+
