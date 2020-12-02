@@ -6,7 +6,7 @@ def flatten_json(nested_json):
         Args:
             nested_json: A nested json object.
         Returns:
-            The flattened json object if successful, None otherwise.
+            The flattened json object
     """
     out = {}
 
