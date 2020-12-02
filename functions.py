@@ -1,13 +1,6 @@
 
 #function to flatten dictionary results
 def flatten_json(nested_json):
-    """
-        Flattens a json object with nested keys into a single level.
-        Args:
-            nested_json: A nested json object.
-        Returns:
-            The flattened json object
-    """
     out = {}
 
     def flatten(x, name=''):
