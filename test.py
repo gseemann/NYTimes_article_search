@@ -9,11 +9,6 @@ import functions
 import params
 import conf
 
-"""
-Skeleton for Squirro Delivery Hiring Coding Challenge
-October 2020
-"""
-
 
 log = logging.getLogger(__name__)
 
@@ -97,7 +92,7 @@ if __name__ == "__main__":
     source.args = argparse.Namespace(**config)
 
     for idx, batch in enumerate(source.getDataBatch(params.batch)):
-        df = pd.DataFrame(columns = params.col_names)
+        df = pd.DataFrame(columns = params.col_names) #reset df each loop
         print(f"{idx} Batch of {len(batch)} items")
         for item in batch:
             db_insert ={}    #will hold sample results for insert into db/df
